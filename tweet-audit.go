@@ -20,6 +20,7 @@ type tweet struct{
 
 	Id  string`json:"id_str"`
 	Text string`json:"full_text"`
+	Date string`json:"created_at"`
 }
 
 type item struct{
@@ -41,7 +42,7 @@ func main(){
 		fmt.Println("lower than 0")
 		return
 	}
-	//i coulddnt think of anything better so for now
+	
 	data = data[line:]
 
 	var items []item
@@ -53,6 +54,5 @@ func main(){
 	}
 	
 
-	//probably writing rubbish at this point
-	fmt.Println(len(items), items[0].Tweet.Id, items[0].Tweet.Text)
+	fmt.Println(len(items), items[0].Tweet.Id, items[0].Tweet.Text, items[0].Tweet.Date)
 }

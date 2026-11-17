@@ -1,0 +1,11 @@
+{
+  "api_key": "API_KEY_HERE",
+  "criteria": {
+    "forbidden_words": ["fuck", "shit", "useless"],
+    "judgment_rules": [
+      "sounds unprofessional to a hiring manager",
+      "is aggressive toward a person or group",
+      "contains racist language"
+    ]
+    }
+}
