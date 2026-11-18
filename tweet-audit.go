@@ -29,22 +29,24 @@ type item struct{
 }
 
 type criteria struct{
-	Words string`json:"forbidden_words"`
-	Rule string`json:"judgment_rules"`
+	Words []string`json:"forbidden_words"`
+	Rule []string`json:"judgment_rules"`
 }
 
 type config struct{
-	Criteria criteria
+	Criteria criteria`json:"criteria"`
+	APIkey string`json:"api_key"`
 }
 
 
-func send(){
+func loadConfig(){
 	file, err := os.ReadFile("config.json")
 	if err != nil{
 		fmt.Println(err)
+		return
 	}
 
-	var rules []config
+	var rules config
 
 	err = json.Unmarshal(file, &rules)
 	if err != nil {
@@ -52,7 +54,7 @@ func send(){
 		return
 	}
 
-	fmt.Println(rules[0].Criteria.Words, rules[0].Criteria.Rule)
+	fmt.Println(rules.Criteria.Words, rules.Criteria.Rule)
 }
 
 func main(){
@@ -80,6 +82,7 @@ func main(){
 		return
 	}
 	
+	loadConfig()
 
 	fmt.Println(len(items), items[0].Tweet.Id, items[0].Tweet.Text, items[0].Tweet.Date)
 }
