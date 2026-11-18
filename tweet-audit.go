@@ -28,6 +28,33 @@ type item struct{
 	Tweet tweet`json:"tweet"`
 }
 
+type criteria struct{
+	Words string`json:"forbidden_words"`
+	Rule string`json:"judgment_rules"`
+}
+
+type config struct{
+	Criteria criteria
+}
+
+
+func send(){
+	file, err := os.ReadFile("config.json")
+	if err != nil{
+		fmt.Println(err)
+	}
+
+	var rules []config
+
+	err = json.Unmarshal(file, &rules)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Println(rules[0].Criteria.Words, rules[0].Criteria.Rule)
+}
+
 func main(){
 //read file inn memory
 	data, err := os.ReadFile("archive/tweets.js")
