@@ -6,6 +6,7 @@ import(
 	"fmt"
 	"bytes"
 	"encoding/json"
+	"strings"
 )
 
 /**
@@ -39,7 +40,7 @@ type config struct{
 }
 
 
-func loadConfig(){
+func loadConfig() (config, error){
 	file, err := os.ReadFile("config.json")
 	if err != nil{
 		fmt.Println(err)
@@ -53,8 +54,15 @@ func loadConfig(){
 		fmt.Println(err)
 		return
 	}
-
+	return rules, err
 	fmt.Println(rules.Criteria.Words, rules.Criteria.Rule)
+}
+
+//function that return true or false based on sensitive words
+func flagged(item, config) boolean{
+	//takes the two values turn them to lowercase
+	text:= strings.ToLower(item, config)
+	
 }
 
 func main(){
@@ -83,6 +91,6 @@ func main(){
 	}
 	
 	loadConfig()
-
+	flagged()
 	fmt.Println(len(items), items[0].Tweet.Id, items[0].Tweet.Text, items[0].Tweet.Date)
 }
