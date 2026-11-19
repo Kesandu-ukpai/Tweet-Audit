@@ -57,19 +57,20 @@ func loadConfig() (config, error){
 	return rules, nil
 }
 
-//function that return true or false based on sensitive words
-func flagged(text string, word []string) bool{
+//function that return true or false based on sensitive words, just one tweet
+func flagged(text string, words []string) bool{
 	//takes the the tweet values turn them to lowercase
 	lowerText:= strings.ToLower(text)
 	//check for the flagged words
-	lowerWord := strings.ToLower(word)
 
-	for _, value := range word{
-		flag := strings.Contains(lowerText, lowerWord)
-		if flag = false{
-			return
+	for _, value := range words{
+		if strings.Contains(lowerText, strings.ToLower(value)){
+			return true
 		}
+		
 	}
+
+	return false
 
 	
 }
@@ -99,7 +100,17 @@ func main(){
 		return
 	}
 	
-	loadConfig()
-	flagged()
+	cfg, err := loadConfig()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	//loop the whole tweet and  pass it to flagged one at a time
+	for _, it := range items{
+		value := flagged(it.Tweet.Text, cfg.Criteria.Words)
+		return value
+	}
+	
 	fmt.Println(len(items), items[0].Tweet.Id, items[0].Tweet.Text, items[0].Tweet.Date)
 }
