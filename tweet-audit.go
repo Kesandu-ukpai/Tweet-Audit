@@ -44,7 +44,7 @@ func loadConfig() (config, error){
 	file, err := os.ReadFile("config.json")
 	if err != nil{
 		fmt.Println(err)
-		return
+		return config{}, err
 	}
 
 	var rules config
@@ -52,16 +52,25 @@ func loadConfig() (config, error){
 	err = json.Unmarshal(file, &rules)
 	if err != nil {
 		fmt.Println(err)
-		return
+		return config{},err
 	}
-	return rules, err
-	fmt.Println(rules.Criteria.Words, rules.Criteria.Rule)
+	return rules, nil
 }
 
 //function that return true or false based on sensitive words
-func flagged(item, config) boolean{
-	//takes the two values turn them to lowercase
-	text:= strings.ToLower(item, config)
+func flagged(text string, word []string) bool{
+	//takes the the tweet values turn them to lowercase
+	lowerText:= strings.ToLower(text)
+	//check for the flagged words
+	lowerWord := strings.ToLower(word)
+
+	for _, value := range word{
+		flag := strings.Contains(lowerText, lowerWord)
+		if flag = false{
+			return
+		}
+	}
+
 	
 }
 
