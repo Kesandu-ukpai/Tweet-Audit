@@ -107,10 +107,13 @@ func main(){
 	}
 
 	//loop the whole tweet and  pass it to flagged one at a time
+	value := 0
 	for _, it := range items{
-		value := flagged(it.Tweet.Text, cfg.Criteria.Words)
-		return value
+		if flagged(it.Tweet.Text, cfg.Criteria.Words) == true{
+			value++
+		}
 	}
 	
+	fmt.Println(value)
 	fmt.Println(len(items), items[0].Tweet.Id, items[0].Tweet.Text, items[0].Tweet.Date)
 }
