@@ -19,24 +19,24 @@ wth do i do with the bytes
 
 type tweet struct{
 
-	Id  string`json:"id_str"`
-	Text string`json:"full_text"`
-	Date string`json:"created_at"`
+	Id  string `json:"id_str"`
+	Text string `json:"full_text"`
+	Date string `json:"created_at"`
 }
 
 type item struct{
 	//the last tweet in json is refencing the one in the archive tweet.js file
-	Tweet tweet`json:"tweet"`
+	Tweet tweet `json:"tweet"`
 }
 
 type criteria struct{
-	Words []string`json:"forbidden_words"`
-	Rule []string`json:"judgment_rules"`
+	Words []string `json:"forbidden_words"`
+	Rule []string `json:"judgment_rules"`
 }
 
 type config struct{
-	Criteria criteria`json:"criteria"`
-	APIkey string`json:"api_key"`
+	Criteria criteria `json:"criteria"`
+	APIkey string `json:"api_key"`
 }
 
 
@@ -107,13 +107,15 @@ func main(){
 	}
 
 	//loop the whole tweet and  pass it to flagged one at a time
-	value := 0
-	for _, it := range items{
-		if flagged(it.Tweet.Text, cfg.Criteria.Words) == true{
-			value++
+	count := 0
+	for index, it := range items{
+		if flagged(it.Tweet.Text, cfg.Criteria.Words){
+			count++
+			fmt.Println("ID of tweet:",  index, "Tweet:" ,it.Tweet.Text)
 		}
 	}
 	
-	fmt.Println(value)
+	
+	fmt.Println("flagged:", value )
 	fmt.Println(len(items), items[0].Tweet.Id, items[0].Tweet.Text, items[0].Tweet.Date)
 }
