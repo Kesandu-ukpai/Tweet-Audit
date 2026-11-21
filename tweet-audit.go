@@ -40,6 +40,11 @@ type config struct{
 }
 
 
+//to catch retweets
+func isRetweeted(text string) bool{
+	return strings.HasPrefix(text, "RT @")
+}
+
 func loadConfig() (config, error){
 	file, err := os.ReadFile("config.json")
 	if err != nil{
@@ -114,8 +119,17 @@ func main(){
 			fmt.Println("ID of tweet:",  index, "Tweet:" ,it.Tweet.Text)
 		}
 	}
+
+	//catch retweet
+	counts := 0
+	for _, it := range items {
+		if isRetweeted(it.Tweet.Text){
+			counts++
+			fmt.Println(it.Tweet.Text)
+		}
+	}
 	
 	
-	fmt.Println("flagged:", value )
+	fmt.Println("flagged:", count )
 	fmt.Println(len(items), items[0].Tweet.Id, items[0].Tweet.Text, items[0].Tweet.Date)
 }
